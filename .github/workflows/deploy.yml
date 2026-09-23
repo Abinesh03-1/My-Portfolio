@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+
   pull_request:
     branches:
       - main
@@ -14,11 +15,16 @@ permissions:
   id-token: write
 
 jobs:
+
+  # =========================
+  # CI - Build and Test
+  # =========================
   build:
     name: Build and Test
     runs-on: ubuntu-latest
 
     steps:
+
       - name: Checkout source code
         uses: actions/checkout@v4
 
@@ -47,6 +53,9 @@ jobs:
         with:
           path: ./build
 
+  # =========================
+  # CD - Deploy
+  # =========================
   deploy:
     name: Deploy to GitHub Pages
     runs-on: ubuntu-latest
@@ -60,6 +69,7 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
 
     steps:
+
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
